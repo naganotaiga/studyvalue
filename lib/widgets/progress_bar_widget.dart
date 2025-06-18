@@ -33,7 +33,7 @@ class ProgressBarWidget extends ConsumerWidget {
     }
 
     final targetHours = ref.read(userProfileProvider.notifier).todayTargetHours;
-    final progressPercentage = (progress * 100).clamp(0, 999); // 上限を設定
+    final progressPercentage = (progress * 100).clamp(0.0, 999.0); // 上限を設定
     final targetSeconds = targetHours * 3600;
 
     return Container(

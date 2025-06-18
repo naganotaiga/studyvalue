@@ -51,8 +51,8 @@ class _MainTabScreenState extends ConsumerState<MainTabScreen> {
         items: [
           // ホームタブ
           BottomNavigationBarItem(
-            icon: const Icon(CupertinoIcons.home),
-            activeIcon: const Icon(CupertinoIcons.home_fill),
+            icon: const Icon(CupertinoIcons.house),
+            activeIcon: const Icon(CupertinoIcons.house_fill),
             label: 'ホーム',
           ),
 
@@ -150,7 +150,7 @@ class _MainTabScreenState extends ConsumerState<MainTabScreen> {
 
   /// 初回起動時のウェルカムダイアログ表示
   void _showFirstTimeWelcome() {
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (context) => CupertinoAlertDialog(

@@ -9,16 +9,13 @@
 /// - 統計カード表示
 library;
 
-import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../design_system/app_theme.dart';
 import '../models/user_profile.dart';
 import '../models/study_session.dart';
 import '../providers/user_profile_provider.dart';
 import '../providers/study_session_provider.dart';
 import '../services/salary_calculator.dart';
-import '../services/warning_system.dart';
 import '../widgets/progress_bar_widget.dart';
 import '../widgets/realtime_earnings_display.dart';
 import '../widgets/warning_display_widget.dart';
@@ -115,11 +112,6 @@ class HomeScreen extends ConsumerWidget {
     double dailyProgress,
   ) {
     final isStudying = currentSession != null && currentSession.endTime == null;
-    final todayEarnings = todaySessions.fold<double>(
-        0, (sum, session) => sum + session.earnedAmount);
-    final todayMinutes =
-        todaySessions.fold<int>(0, (sum, session) => sum + session.duration) ~/
-            60;
     final streak = _calculateStreak(todaySessions);
     final hourlyWage = SalaryCalculator.calculateHourlyWage(userProfile);
 
@@ -246,8 +238,6 @@ class HomeScreen extends ConsumerWidget {
   Widget _buildStatsGrid(UserProfile userProfile,
       List<StudySession> todaySessions, double hourlyWage, int streak) {
     final sessionCount = todaySessions.length;
-    final totalTime =
-        todaySessions.fold<int>(0, (sum, session) => sum + session.duration);
     final daysUntilExam =
         userProfile.examDate.difference(DateTime.now()).inDays;
 
@@ -416,7 +406,7 @@ class HomeScreen extends ConsumerWidget {
     if (sessions.isEmpty) return 0;
 
     int streak = 0;
-    DateTime currentDate = DateTime.now();
+    final currentDate = DateTime.now();
 
     for (int i = 0; i < 30; i++) {
       final checkDate = currentDate.subtract(Duration(days: i));
@@ -440,7 +430,7 @@ class HomeScreen extends ConsumerWidget {
 
   /// セッション完了ダイアログ
   void _showSessionCompleteDialog(BuildContext context, StudySession session) {
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: const Row(
@@ -545,7 +535,7 @@ class HomeScreen extends ConsumerWidget {
 
   /// エラーダイアログ
   void _showErrorDialog(BuildContext context, String message) {
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: const Text(

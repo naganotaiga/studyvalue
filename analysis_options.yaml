@@ -91,7 +91,6 @@ linter:
     
     # === 非同期処理の最適化 ===
     avoid_catching_errors: true
-    prefer_async_await: true
     unawaited_futures: true
     
     # === セキュリティ ===

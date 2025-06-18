@@ -25,10 +25,10 @@ class RealtimeEarningsDisplay extends ConsumerWidget {
 
     // 今日の累計収益計算
     final todayTotalEarnings = todaySessions.fold<double>(
-        0, (sum, session) => sum + session.earnedAmount);
+        0.0, (sum, session) => sum + session.earnedAmount);
 
     // 現在のセッション収益
-    final currentSessionEarnings = currentSession?.earnedAmount ?? 0;
+    final currentSessionEarnings = currentSession?.earnedAmount ?? 0.0;
 
     // 勉強中かどうか
     final isStudying = currentSession != null && currentSession.endTime == null;
