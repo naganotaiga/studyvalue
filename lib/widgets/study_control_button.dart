@@ -36,7 +36,7 @@ class StudyControlButton extends ConsumerWidget {
         onPressed: () async {
           if (isStudying) {
             await ref.read(studySessionProvider.notifier).endSession();
-            if (currentSession != null && context.mounted) {
+            if (context.mounted) {
               _showSessionCompleteDialog(context, currentSession);
             }
           } else {
@@ -67,7 +67,7 @@ class StudyControlButton extends ConsumerWidget {
   }
   
   void _showSessionCompleteDialog(BuildContext context, StudySession session) {
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: Row(

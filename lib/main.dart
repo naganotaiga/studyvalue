@@ -10,6 +10,7 @@ library;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'services/database_manager.dart';
 import 'screens/main_tab_screen.dart';
 
@@ -43,9 +44,11 @@ class StudyValueApp extends StatelessWidget {
       // デバッグバナー非表示（リリース時の美観向上）
       debugShowCheckedModeBanner: false,
 
-      // iOS固有の設定
+      // iOS固有の国際化設定
       localizationsDelegates: const [
-        DefaultCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: const [
         Locale('ja', 'JP'), // 日本語優先

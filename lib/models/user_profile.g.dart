@@ -26,10 +26,10 @@ class UserProfileAdapter extends TypeAdapter<UserProfile> {
       customSalaryData: fields[6] as double?,
       createdAt: fields[7] as DateTime,
       updatedAt: fields[8] as DateTime,
-      currentStreak: fields[9] as int,
-      longestStreak: fields[10] as int,
-      totalStudyDays: fields[11] as int,
-      totalEarnings: fields[12] as double,
+      currentStreak: fields[9] == null ? 0 : fields[9] as int,
+      longestStreak: fields[10] == null ? 0 : fields[10] as int,
+      totalStudyDays: fields[11] == null ? 0 : fields[11] as int,
+      totalEarnings: fields[12] == null ? 0.0 : fields[12] as double,
     );
   }
 

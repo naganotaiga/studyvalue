@@ -2,7 +2,6 @@
 /// 偏差値帯別年収データから時給を計算し、各種フォーマット機能を提供
 
 import '../models/user_profile.dart';
-import '../models/salary_data.dart';
 import '../models/study_session.dart';
 
 class SalaryCalculator {

@@ -29,6 +29,11 @@ dependencies:
   # iOS専用アイコン
   cupertino_icons: ^1.0.8
 
+  # 国際化（ローカライゼーション）対応
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.19.0
+
   # 将来の機能拡張用（現在は非使用）
   # flutter_local_notifications: ^17.0.0  # 通知機能
   # timezone: ^0.9.4                      # タイムゾーン処理

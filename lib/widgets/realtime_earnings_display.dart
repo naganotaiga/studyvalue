@@ -36,7 +36,7 @@ class RealtimeEarningsDisplay extends ConsumerWidget {
     // 時給情報
     final hourlyWage = userProfile != null
         ? SalaryCalculator.calculateHourlyWage(userProfile)
-        : 0;
+        : 0.0;
 
     return Container(
       width: double.infinity,

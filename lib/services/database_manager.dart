@@ -20,25 +20,32 @@ class DatabaseManager {
 
   /// データベース初期化
   static Future<void> initialize() async {
-    await Hive.initFlutter();
+    try {
+      await Hive.initFlutter();
 
-    // アダプターを登録
-    if (!Hive.isAdapterRegistered(0)) Hive.registerAdapter(UserProfileAdapter());
-    if (!Hive.isAdapterRegistered(1)) Hive.registerAdapter(StudySessionAdapter());
-    if (!Hive.isAdapterRegistered(2)) Hive.registerAdapter(SalaryDataAdapter());
-    if (!Hive.isAdapterRegistered(3)) Hive.registerAdapter(NotificationSettingsAdapter());
+      // アダプターを登録
+      if (!Hive.isAdapterRegistered(0)) Hive.registerAdapter(UserProfileAdapter());
+      if (!Hive.isAdapterRegistered(1)) Hive.registerAdapter(StudySessionAdapter());
+      if (!Hive.isAdapterRegistered(2)) Hive.registerAdapter(SalaryDataAdapter());
+      if (!Hive.isAdapterRegistered(3)) Hive.registerAdapter(NotificationSettingsAdapter());
 
-    // 型付きBoxを開く
-    _userProfileBox = await Hive.openBox<UserProfile>(userProfileBoxName);
-    _studySessionBox = await Hive.openBox<StudySession>(studySessionBoxName);
-    _salaryDataBox = await Hive.openBox<SalaryData>(salaryDataBoxName);
-    _notificationSettingsBox = await Hive.openBox<NotificationSettings>(notificationSettingsBoxName);
+      // 型付きBoxを開く
+      _userProfileBox = await Hive.openBox<UserProfile>(userProfileBoxName);
+      _studySessionBox = await Hive.openBox<StudySession>(studySessionBoxName);
+      _salaryDataBox = await Hive.openBox<SalaryData>(salaryDataBoxName);
+      _notificationSettingsBox = await Hive.openBox<NotificationSettings>(notificationSettingsBoxName);
 
-    // 初期データセットアップ
-    await _setupInitialData();
+      // 初期データセットアップ
+      await _setupInitialData();
 
-    // データマイグレーション実行
-    await migrateData();
+      // データマイグレーション実行
+      await migrateData();
+      
+      print('✅ Database initialized successfully');
+    } catch (e) {
+      print('❌ Database initialization error: $e');
+      rethrow;
+    }
   }
 
   /// 初期データのセットアップ
@@ -140,8 +147,18 @@ class DatabaseManager {
 
   /// データベースマイグレーション - 新しいフィールドのデフォルト値設定
   static Future<void> migrateData() async {
-    // 開発中は簡単のためにデータをクリア
-    // 本番環境では適切なマイグレーション処理を実装
-    print('Migration: Clearing data for schema update compatibility');
+    try {
+      // UserProfileのマイグレーション：新しいフィールドが追加された場合のデフォルト値設定
+      // HiveのdefaultValue機能により自動的に処理される
+      print('✅ Database migration completed successfully');
+    } catch (e) {
+      print('⚠️ Migration warning: $e');
+      // 開発環境ではデータをクリアして新しいスキーマに対応
+      if (e.toString().contains('type cast')) {
+        print('🔄 Clearing database due to schema changes...');
+        await clearAllData();
+        print('✅ Database cleared and ready for new schema');
+      }
+    }
   }
 }

@@ -40,7 +40,6 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
     'その他国公立大学',
   ];
   
-  final List<String> _genders = ['男性', '女性', 'その他'];
 
   @override
   void initState() {
@@ -288,7 +287,7 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
             child: CupertinoButton(
               padding: EdgeInsets.zero,
               onPressed: () {
-                showCupertinoModalPopup(
+                showCupertinoModalPopup<void>(
                   context: context,
                   builder: (context) => Container(
                     height: 250,
@@ -435,7 +434,7 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
   }
 
   void _showPicker(BuildContext context, Widget picker) {
-    showCupertinoModalPopup(
+    showCupertinoModalPopup<void>(
       context: context,
       builder: (context) => Container(
         height: 250,
@@ -473,7 +472,7 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
       }
     } catch (e) {
       if (mounted) {
-        showCupertinoDialog(
+        await showCupertinoDialog<void>(
           context: context,
           builder: (context) => CupertinoAlertDialog(
             title: const Text('エラー'),

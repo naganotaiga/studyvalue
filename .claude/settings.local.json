@@ -22,7 +22,8 @@
       "Bash(flutter analyze:*)",
       "Bash(sed:*)",
       "Bash(flutter logs:*)",
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "mcp__ide__getDiagnostics"
     ],
     "deny": []
   }

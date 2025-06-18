@@ -4,7 +4,6 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/study_session.dart';
-import '../models/user_profile.dart';
 import '../services/database_manager.dart';
 import '../services/salary_calculator.dart';
 import 'user_profile_provider.dart';

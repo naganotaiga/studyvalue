@@ -34,16 +34,16 @@ class UserProfile extends HiveObject {
   @HiveField(8)
   DateTime updatedAt;
 
-  @HiveField(9)
+  @HiveField(9, defaultValue: 0)
   int currentStreak;
 
-  @HiveField(10)
+  @HiveField(10, defaultValue: 0)
   int longestStreak;
 
-  @HiveField(11)
+  @HiveField(11, defaultValue: 0)
   int totalStudyDays;
 
-  @HiveField(12)
+  @HiveField(12, defaultValue: 0.0)
   double totalEarnings;
 
   UserProfile({

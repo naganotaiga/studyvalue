@@ -42,7 +42,6 @@ class WarningSystem {
   /// 警告データを生成
   static WarningData generateWarningData(UserProfile profile, List<StudySession> sessions) {
     final level = calculateWarningLevel(profile, sessions);
-    final progress = SalaryCalculator.calculateDailyProgress(profile, sessions);
     final hourlyWage = SalaryCalculator.calculateHourlyWage(profile);
     final todayStudyTime = SalaryCalculator.calculateTodayStudyTime(sessions);
     
