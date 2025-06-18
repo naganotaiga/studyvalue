@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(flutter build:*)",
+      "Bash(xcrun simctl list:*)",
+      "Bash(flutter clean:*)",
+      "Bash(pod install:*)",
+      "Bash(flutter pub:*)",
+      "Bash(flutter run:*)",
+      "Bash(flutter doctor:*)",
+      "Bash(open:*)",
+      "Bash(xcodebuild:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(plutil:*)",
+      "Bash(xcrun simctl create:*)",
+      "Bash(find:*)",
+      "Bash(rm:*)",
+      "Bash(xcrun simctl boot:*)",
+      "Bash(flutter packages pub run:*)",
+      "Bash(flutter analyze:*)",
+      "Bash(sed:*)",
+      "Bash(flutter logs:*)",
+      "Bash(test:*)"
+    ],
+    "deny": []
+  }
+}
