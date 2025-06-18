@@ -107,7 +107,7 @@ User Input → UI Widget → Riverpod Provider → Service/Calculator → Hive D
 - `WarningSystem`: 3-tier motivational message generation
 
 **Data Models (Hive TypeIds)**
-- `UserProfile` (0): Target university, study hours, exam date
+- `UserProfile` (0): Target university, study hours, exam date, streak tracking
 - `StudySession` (1): Study records with start/end times and earnings
 - `SalaryData` (2): Deviation value to annual salary mapping
 - `NotificationSettings` (3): User notification preferences
@@ -141,27 +141,67 @@ User Input → UI Widget → Riverpod Provider → Service/Calculator → Hive D
 - **Category**: Education
 
 ### Dependencies
-- Flutter SDK: >=3.0.0 <4.0.0
-- flutter_riverpod: ^2.4.9
+- Flutter SDK: >=3.0.0 <4.0.0, Flutter: >=3.27.0
+- flutter_riverpod: ^2.6.1
 - hive/hive_flutter: ^2.2.3/^1.1.0
-- cupertino_icons: ^1.0.6
+- cupertino_icons: ^1.0.8
+- flutter_localizations (SDK), intl: ^0.19.0
 - Build tools: hive_generator, build_runner
 
 ### Font Configuration
-Fonts are included but configuration is commented out in pubspec.yaml. To enable:
-1. Uncomment lines 52-60 in pubspec.yaml
-2. Run `flutter pub get`
+NotoSansJP fonts are configured and enabled in pubspec.yaml (lines 63-71):
+- Regular (400), Medium (500), Bold (700) weights
+- Font family: 'NotoSansJP' used throughout the app
 
-## Code Generation
+## Code Generation & Database Schema
 
+### Hive Models
 Hive adapters are generated for all models. When modifying models:
-1. Update the model class
+1. Update the model class (add `defaultValue` for new fields to avoid migration issues)
 2. Increment adapter version if needed
-3. Run build_runner
+3. Run `flutter packages pub run build_runner build --delete-conflicting-outputs`
 4. Test database migration
+
+**Important**: New @HiveField entries should include `defaultValue` parameter to prevent null cast errors:
+```dart
+@HiveField(9, defaultValue: 0)
+int newField;
+```
+
+### Database Migration
+- Development: Database is cleared on app startup (see DatabaseManager.clearAllData())
+- Migration logic handles schema changes gracefully with default values
+- Production apps should implement proper migration strategies
+
+## Localization & Platform Support
+
+### Internationalization
+- Japanese (ja_JP) primary locale with English (en_US) fallback
+- Full Cupertino localization support via GlobalCupertinoLocalizations
+- All UI text uses Japanese with NotoSansJP font family
+- String interpolation warnings resolved for proper formatting
 
 ## Privacy & Offline Design
 - Completely offline - no network calls
 - All data stored locally via Hive
 - No analytics or external services
 - Database cleared on app uninstall
+
+## Common Issues & Solutions
+
+### Database Schema Changes
+If you encounter "type 'Null' is not a subtype of type 'int'" errors:
+1. Add `defaultValue` to new @HiveField entries
+2. Regenerate Hive adapters with build_runner
+3. Clear database in development: `await DatabaseManager.clearAllData()`
+
+### Localization Errors
+If you see "No CupertinoLocalizations found":
+1. Ensure `flutter_localizations` is in dependencies
+2. Import `package:flutter_localizations/flutter_localizations.dart`
+3. Add all three delegates: GlobalMaterialLocalizations, GlobalCupertinoLocalizations, GlobalWidgetsLocalizations
+
+### Build Issues
+- Always run `flutter clean && flutter pub get` after dependency changes
+- For iOS pod issues: `cd ios && rm -rf Pods Podfile.lock && pod install`
+- Code generation conflicts: Use `--delete-conflicting-outputs` flag
